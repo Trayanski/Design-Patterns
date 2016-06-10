@@ -1,0 +1,62 @@
+package com.company.DesignPatterns;
+
+public class Problem1AbstractFactory {
+    public static void main(String[] args) {
+        HouseFactory houseFactory = new HouseFactory();
+        houseFactory.getPart("Window").make();
+        houseFactory.getPart("Door").make();
+        houseFactory.getPart("Floor").make();
+    }
+}
+
+interface HousePart {
+    void make();
+}
+
+class Window implements HousePart {
+    @Override
+    public void make() {
+        System.out.println("Window successfully build.");
+    }
+}
+
+class Door implements HousePart {
+    @Override
+    public void make() {
+        System.out.println("Door successfully build.");
+    }
+}
+
+class Floor implements HousePart {
+    @Override
+    public void make() {
+        System.out.println("Floor successfully build.");
+    }
+}
+
+abstract class AbstractFactory{
+    abstract HousePart getPart(String part);
+}
+
+class HouseFactory extends AbstractFactory {
+
+    @Override
+    public HousePart getPart(String part) {
+
+        if (part == null) {
+            return null;
+        }
+
+        if (part.equalsIgnoreCase("Window")) {
+            return new Window();
+
+        } else if (part.equalsIgnoreCase("Door")) {
+            return new Door();
+
+        } else if (part.equalsIgnoreCase("Floor")) {
+            return new Floor();
+        }
+
+        return null;
+    }
+}
