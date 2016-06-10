@@ -1,0 +1,20 @@
+package com.company.DesignPatterns;
+
+class Singleton {
+
+    private static Singleton instance = new Singleton();
+
+    private Singleton() {
+        System.out.println("Singleton created");
+    }
+
+    public static Singleton getInstance(){
+        return instance;
+    }
+}
+
+public class SingletonPatternDemo {
+    public static void main(String[] args) {
+        Singleton object = Singleton.getInstance();
+    }
+}
