@@ -1,0 +1,41 @@
+package com.company.DesignPatterns;
+
+public class Problem4Proxy {
+    public static void main(String[] args) {
+        int num = 2;
+        IntegerProxy integerProxy = new IntegerProxy();
+        integerProxy.сиcreateInstance(num);
+        integerProxy.print();
+    }
+}
+
+class IntegerProxy{
+    Proxy proxy = new Proxy();
+
+    IntegerProxy(){}
+
+    public void сиcreateInstance(int num){
+        proxy.сиcreateInstance(num);
+    }
+
+    public void print(){
+        proxy.print();
+    }
+}
+
+class Proxy{
+    private Integer integerProxy = 0;
+
+    Proxy(){}
+
+    public void сиcreateInstance(int num){
+        this.integerProxy = num;
+        this.integerProxy = test(this.integerProxy);
+    }
+
+    public void print(){
+        System.out.println(this.integerProxy);
+    }
+
+    public Integer test(Integer num){return num;}
+}
