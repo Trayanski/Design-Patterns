@@ -14,21 +14,18 @@ interface HousePart {
 }
 
 class Window implements HousePart {
-    @Override
     public void make() {
         System.out.println("Window successfully build.");
     }
 }
 
 class Door implements HousePart {
-    @Override
     public void make() {
         System.out.println("Door successfully build.");
     }
 }
 
 class Floor implements HousePart {
-    @Override
     public void make() {
         System.out.println("Floor successfully build.");
     }
@@ -39,8 +36,6 @@ abstract class AbstractFactory{
 }
 
 class HouseFactory extends AbstractFactory {
-
-    @Override
     public HousePart getPart(String part) {
 
         if (part == null) {
