@@ -1,0 +1,57 @@
+package com.company.DesignPatterns;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Problem3ObjectPoolPattern {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int maxObjects = scanner.nextInt();
+
+        ObjectPool objectPool = new ObjectPool();
+        objectPool.acquire(1, maxObjects);
+        objectPool.acquire(2, maxObjects);
+        objectPool.acquire(3, maxObjects);
+        objectPool.release(1);
+    }
+}
+
+class ObjectPool{ //must be Singleton
+    private ArrayList<Object> pool = new ArrayList<>();
+
+    public ObjectPool(){}
+
+    public void acquire(Object object, int maxObjects){
+        try {
+            if (pool.size() >= maxObjects) {
+                throw new NoFreeSpaceException("Error! There is no free space.");
+            }else {
+                int index = pool.size();
+                pool.add(index, object);
+                System.out.println("Object: " + object + " was acquired.");
+            }
+        }catch (NoFreeSpaceException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void release(Object object){
+        pool.remove(object);
+        System.out.println("Object: " + object + " was released.");
+    }
+}
+
+class NoFreeSpaceException extends Exception{
+    public NoFreeSpaceException(){}
+    public NoFreeSpaceException(String msg){
+        super(msg);
+    }
+}
+
+/*
+2                                 //input
+Object: 1 was acquired.           //output 
+Object: 2 was acquired.           //output
+Error! There is no free space.    //output
+Object: 1 was released.           //output
+*/
