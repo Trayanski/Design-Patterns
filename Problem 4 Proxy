@@ -2,40 +2,46 @@ package com.company.DesignPatterns;
 
 public class Problem4Proxy {
     public static void main(String[] args) {
-        int num = 2;
-        IntegerProxy integerProxy = new IntegerProxy();
-        integerProxy.сиcreateInstance(num);
-        integerProxy.print();
+        Proxy proxy = new Proxy();
+        proxy.setMessage("New Message.");
+        System.out.println(proxy.getMessage());
     }
 }
 
-class IntegerProxy{
-    Proxy proxy = new Proxy();
+class RealClass{
+    private String message = null;
 
-    IntegerProxy(){}
+    public RealClass(){}
 
-    public void сиcreateInstance(int num){
-        proxy.сиcreateInstance(num);
+    public String getMessage(){
+        return this.message;
     }
 
-    public void print(){
-        proxy.print();
+    public void setMessage(String newMessage){
+        this.message = newMessage;
     }
 }
 
-class Proxy{
-    private Integer integerProxy = 0;
+class Proxy {
+    private String proxyMessage = null;
+    private RealClass proxyRealClass;
 
-    Proxy(){}
-
-    public void сиcreateInstance(int num){
-        this.integerProxy = num;
-        this.integerProxy = test(this.integerProxy);
+    public Proxy(){
+        this.proxyRealClass = new RealClass();
     }
 
-    public void print(){
-        System.out.println(this.integerProxy);
+    public String getMessage(){
+        this.proxyMessage = this.proxyRealClass.getMessage();
+        return this.proxyMessage;
     }
 
-    public Integer test(Integer num){return num;}
+    public void setMessage(String newMessage){
+        this.proxyRealClass.setMessage(newMessage);
+        this.proxyMessage = this.proxyRealClass.getMessage();
+    }
 }
+
+/* 
+Output:
+New Message.
+ */
