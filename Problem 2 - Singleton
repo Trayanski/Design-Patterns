@@ -12,4 +12,12 @@ public class Singleton {
     public static Singleton getInstance() {
         return SingletonHolder.INSTANCE;
     }
+
+    public static void main(String[] args) {
+        Singleton singleton = new Singleton();
+        singleton.getInstance();
+    }
 }
+
+//Singleton created
+//Singleton created
