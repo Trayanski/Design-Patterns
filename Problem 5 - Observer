@@ -1,0 +1,147 @@
+package com.company.DesignPatterns;
+
+import java.util.*;
+
+public class Problem5Observer {
+    public static void main(String[] args) {
+        Products products = new Products();
+        products.viewListenerStatistics();
+        products.addProduct("First product.");
+        products.addProduct("Second product.");
+        products.viewAvailableProductsStatistics();
+        products.sellProduct("Second Product");
+        products.sellProduct("Second product.");
+        products.viewSoledProductsStatistics();
+        products.viewListenerStatistics();
+    }
+}
+
+class Products{
+    private ArrayList<Object> availableProductsList = new ArrayList();
+    private SoldProducts soldProducts;
+    private Listener listener;
+    private String message;
+
+    public Products(){
+        this.soldProducts = new SoldProducts();
+        listener = new Listener();
+    }
+
+    public void sellProduct(Object object){
+        int index = this.availableProductsList.indexOf(object);
+
+        if (this.availableProductsList.contains(object)) {
+            this.soldProducts.addProduct(this.availableProductsList.get(index));
+            this.message = "Product: \"" + this.availableProductsList.get(index) + "\" was soled.";
+            this.listener.add(this.message);
+            System.out.println(this.message);
+            this.availableProductsList.remove(this.availableProductsList.get(index));
+        }else{
+            this.message = "Product: \"" + object + "\" is not available and can't be sold.";
+            this.listener.add(this.message);
+            System.out.println(this.message);
+        }
+    }
+
+    public void addProduct(Object object){
+        this.availableProductsList.add(this.availableProductsList.size(), object);
+        this.message = "Product: \"" + object + "\" was added.";
+        this.listener.add(this.message);
+        System.out.println(this.message);
+
+    }
+
+    public void viewAvailableProductsStatistics(){
+        if (this.availableProductsList.size() == 0){
+            this.message = "There aren't any available products.";
+            this.listener.add(message);
+            System.out.println(message);
+        }else {
+            System.out.println("Available Products:");
+            for (int index = 0; index < this.availableProductsList.size(); index++) {
+                System.out.println(index + " - " + this.availableProductsList.get(index));
+            }
+        }
+    }
+
+    public void viewSoledProductsStatistics(){
+        if (this.soldProducts.size() == 0){
+            this.message = "There aren't any sold products.";
+            this.listener.add(message);
+            System.out.println(message);
+        }else {
+            this.soldProducts.viewSoledProductsStatistics();
+        }
+    }
+
+    public void viewListenerStatistics(){
+        if (this.listener.size() == 0){
+            this.message = "There aren't any statistics.";
+            this.listener.add(message);
+            System.out.println(message);
+        }else {
+            this.listener.viewListenerStatistics();
+        }
+    }
+}
+
+class SoldProducts {
+    private ArrayList<Object> soledProductsList = new ArrayList();
+
+    //public SoldProducts(){}
+
+    public int size(){
+        return this.soledProductsList.size();
+    }
+
+    public void addProduct(Object object){
+        this.soledProductsList.add(this.soledProductsList.size(), object);
+    }
+
+    public void viewSoledProductsStatistics(){
+        System.out.println("Soled Products:");
+        for (int index = 0; index < this.soledProductsList.size(); index++) {
+            System.out.println(index + " - " + this.soledProductsList.get(index));
+        }
+    }
+}
+
+class Listener{
+    private ArrayList<String> statistics = new ArrayList();
+
+    //public Listener(){}
+
+    public int size(){
+        return this.statistics.size();
+    }
+
+    public void add(String message){
+        this.statistics.add(this.statistics.size(), message);
+    }
+
+    public void viewListenerStatistics(){
+        System.out.println("Soled Products:");
+        for (int index = 0; index < this.statistics.size(); index++) {
+            System.out.println(index + " - " + this.statistics.get(index));
+        }
+    }
+}
+
+/*
+There aren't any statistics.
+Product: "First product." was added.
+Product: "Second product." was added.
+Available Products:
+0 - First product.
+1 - Second product.
+Product: "Second Product" is not available and can't be sold.
+Product: "Second product." was soled.
+Soled Products:
+0 - Second product.
+Soled Products:
+0 - There aren't any statistics.
+1 - Product: "First product." was added.
+2 - Product: "Second product." was added.
+3 - Product: "Second Product" is not available and can't be sold.
+4 - Product: "Second product." was soled.
+*/
